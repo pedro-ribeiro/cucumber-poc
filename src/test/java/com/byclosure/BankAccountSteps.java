@@ -46,6 +46,7 @@ public class BankAccountSteps {
         for(AccountInfo ai : accountInfos) {
             final BankAccount b = new BankAccount(ai.name);
             b.setBalance(ai.balance);
+            accounts.add(b);
         }
     }
 

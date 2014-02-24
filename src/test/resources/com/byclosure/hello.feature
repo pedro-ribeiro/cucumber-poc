@@ -1,4 +1,7 @@
 Feature: Story proof of concept
+  As an Account Holder
+  I want to transfer to and from my account
+  So that I can manage my money
 
   Background:
     Given I have a bank account
