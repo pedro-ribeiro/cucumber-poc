@@ -1,5 +1,7 @@
 package com.byclosure;
 
+import cucumber.api.Pending;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -33,7 +35,8 @@ public class BankAccountSteps {
 
     @Then("^my bank account balance should be \\$(\\d+)$")
     public void my_bank_account_balance_should_be_$(int balance) throws Throwable {
-        Assert.assertEquals(balance, ba.getBalance());
+//        Assert.assertEquals(balance, ba.getBalance());
+        throw new PendingException();
     }
 
     @When("^I add \\$(\\d+)$")
