@@ -33,11 +33,11 @@ public class BankAccountSteps {
         ba.withdraw(value);
     }
 
-    @Then("^my bank account balance should be \\$(\\d+)$")
-    public void my_bank_account_balance_should_be_$(int balance) throws Throwable {
-//        Assert.assertEquals(balance, ba.getBalance());
-        throw new PendingException();
-    }
+//    @Then("^my bank account balance should be \\$(\\d+)$")
+//    public void my_bank_account_balance_should_be_$(int balance) throws Throwable {
+////        Assert.assertEquals(balance, ba.getBalance());
+//        throw new PendingException();
+//    }
 
     @When("^I add \\$(\\d+)$")
     public void I_add_$(int value) throws Throwable {
