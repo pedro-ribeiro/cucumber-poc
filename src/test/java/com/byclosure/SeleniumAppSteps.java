@@ -5,12 +5,15 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -55,9 +58,19 @@ public class SeleniumAppSteps {
     }
 
     @After
-    public void after(Scenario scenario) {
+    public void after(Scenario scenario) throws IOException {
+
+        scenario.write("<h1>Screenshot</h1>");
         byte[] screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
         scenario.embed(screenshot, "image/png");
+
+        scenario.write("<h1>Video</h1>");
+        File movie = new File("movie.ogg");
+        byte[] movieByteArray = FileUtils.readFileToByteArray(movie);
+        scenario.embed(movieByteArray, "video/ogg");
+
+        scenario.write("<h1>Logs</h1>");
+        scenario.write("<b>Text with HTML</b>\n<p>this is a multi\nline text</p>");
 
         driver.quit();
     }
