@@ -64,10 +64,15 @@ public class SeleniumAppSteps {
         byte[] screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
         scenario.embed(screenshot, "image/png");
 
-        scenario.write("<h1>Video</h1>");
-        File movie = new File("movie.ogg");
-        byte[] movieByteArray = FileUtils.readFileToByteArray(movie);
-        scenario.embed(movieByteArray, "video/ogg");
+        scenario.write("<h1>Video OGG</h1>");
+        File ogg = new File("movie.ogg");
+        byte[] oggByteArray = FileUtils.readFileToByteArray(ogg);
+        scenario.embed(oggByteArray, "video/ogg");
+
+        scenario.write("<h1>Video MP4</h1>");
+        File mp4 = new File("movie.mp4");
+        byte[] mp4ByteArray = FileUtils.readFileToByteArray(mp4);
+        scenario.embed(mp4ByteArray, "video/mp4");
 
         scenario.write("<h1>Logs</h1>");
         scenario.write("<b>Text with HTML</b>\n<p>this is a multi\nline text</p>");
