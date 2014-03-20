@@ -9,11 +9,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(format = {
-        "html:target/cucumber-html-report",
-        "json:target/cucumber-json-report.json",
-        "junit:target/cucumber-junit-report.xml"
-//        "at.porscheinformatik.cucumber.formatter.HtmlFormatter:target/html",
-//        "com.byclosure.MongoDBFormatter:target/db"
+        "json:target/cucumber-json-report.json"
 })
 public class RunCukesTest {
 }

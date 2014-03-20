@@ -25,18 +25,42 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.15</version>
-                <configuration>
-                    <useFile>false</useFile>
-                </configuration>
+                <executions>
+                    <execution>
+                        <id>acceptance-test</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <forkCount>5</forkCount>
+                            <reuseForks>false</reuseForks>
+                            <argLine>-Duser.language=en</argLine>
+                            <argLine>-Xmx1024m</argLine>
+                            <argLine>-XX:MaxPermSize=256m</argLine>
+                            <argLine>-Dfile.encoding=UTF-8</argLine>
+                            <useFile>false</useFile>
+                            <includes>
+                                <include>**/*AT.class</include>
+                            </includes>
+                            <testFailureIgnore>true</testFailureIgnore>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>2.39.0</version>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>com.byclosure</groupId>
+            <artifactId>webcat-testing-platform</artifactId>
+            <version>0.0.11-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -63,12 +87,12 @@
             <version>1.1.5</version>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>at.porscheinformatik.cucumber</groupId>-->
-            <!--<artifactId>cucumber-formatter</artifactId>-->
-            <!--<version>1.1.0.BUILD-SNAPSHOT</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>at.porscheinformatik.cucumber</groupId>
+            <artifactId>cucumber-formatter</artifactId>
+            <version>1.1.0.BUILD-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

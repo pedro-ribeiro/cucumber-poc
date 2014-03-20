@@ -1,5 +1,12 @@
 package com.byclosure;
 
+import com.byclosure.pageobjects.GoogleFrontPageObject;
+import com.byclosure.pageobjects.GoogleSearchResultPageObject;
+import com.byclosure.pageobjects.criterias.GoogleFrontPageCriteria;
+import com.byclosure.pageobjects.criterias.GoogleSearchResultPageCriteria;
+import com.byclosure.webcattestingplatform.IPageObjectFactory;
+import com.byclosure.webcattestingplatform.NavigationService;
+import com.byclosure.webcattestingplatform.pageobjects.IPageObject;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
@@ -26,15 +33,35 @@ public class SeleniumAppSteps {
 
     private final static String localGridURL = "http://192.168.1.91:4444/wd/hub";
     private WebDriver driver;
+    private NavigationService navigationService;
 
     public SeleniumAppSteps() throws MalformedURLException {
-        final DesiredCapabilities caps = DesiredCapabilities.chrome();
-        caps.setBrowserName("chrome");
-        caps.setCapability("chrome.switches", Arrays.asList("--kiosk"));
+        final DesiredCapabilities caps = DesiredCapabilities.firefox();
+//        caps.setBrowserName("chrome");
+//        caps.setCapability("chrome.switches", Arrays.asList("--kiosk"));
         driver = new RemoteWebDriver(new URL(localGridURL), caps);
 
         Augmenter augmenter = new Augmenter();
         driver = augmenter.augment(driver);
+
+        navigationService = new NavigationService(driver);
+        registerPageObjects();
+    }
+
+    private void registerPageObjects() {
+        navigationService.register("Google Front Page", new GoogleFrontPageCriteria(driver), new IPageObjectFactory() {
+            @Override
+            public GoogleFrontPageObject build(NavigationService navigationService) {
+                return new GoogleFrontPageObject(driver, navigationService);
+            }
+        });
+
+        navigationService.register("Google Search Results Page", new GoogleSearchResultPageCriteria(driver), new IPageObjectFactory() {
+            @Override
+            public GoogleSearchResultPageObject build(NavigationService navigationService) {
+                return new GoogleSearchResultPageObject(driver, navigationService);
+            }
+        });
     }
 
     @Given("^I am in \"([^\"]*)\"$")
@@ -44,38 +71,21 @@ public class SeleniumAppSteps {
 
     @When("^I search for \"([^\"]*)\"$")
     public void I_search_for(String query) throws Throwable {
-        final WebElement searchInput = driver.findElement(By.name("q"));
-        searchInput.clear();
-        searchInput.sendKeys(query + "\n");
+        GoogleFrontPageObject frontPage = navigationService.getPage("Google Front Page");
+        frontPage.search(query);
     }
 
     @Then("^I should see a list of results referring to \"([^\"]*)\"$")
     public void I_should_see_a_list_of_results_referring_to(String queryResult) throws Throwable {
-        final List<WebElement> results = driver.findElements(By.className("r"));
-        for(WebElement result : results) {
-            Assert.assertTrue(result.getText().contains(queryResult));
-        }
+        GoogleSearchResultPageObject searchResultPageObject = navigationService.getPage("Google Search Results Page");
+
+        Assert.assertTrue(searchResultPageObject.getNumberOfResultsReferingTo(queryResult) > 0);
     }
 
     @After
     public void after(Scenario scenario) throws IOException {
-
-        scenario.write("<h1>Screenshot</h1>");
         byte[] screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
         scenario.embed(screenshot, "image/png");
-
-        scenario.write("<h1>Video OGG</h1>");
-        File ogg = new File("movie.ogg");
-        byte[] oggByteArray = FileUtils.readFileToByteArray(ogg);
-        scenario.embed(oggByteArray, "video/ogg");
-
-        scenario.write("<h1>Video MP4</h1>");
-        File mp4 = new File("movie.mp4");
-        byte[] mp4ByteArray = FileUtils.readFileToByteArray(mp4);
-        scenario.embed(mp4ByteArray, "video/mp4");
-
-        scenario.write("<h1>Logs</h1>");
-        scenario.write("<b>Text with HTML</b>\n<p>this is a multi\nline text</p>");
 
         driver.quit();
     }
