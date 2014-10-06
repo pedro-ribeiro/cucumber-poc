@@ -87,12 +87,12 @@
             <version>1.1.5</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>at.porscheinformatik.cucumber</groupId>
             <artifactId>cucumber-formatter</artifactId>
             <version>1.1.0.BUILD-SNAPSHOT</version>
             <scope>test</scope>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

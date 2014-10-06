@@ -36,7 +36,7 @@ public class SeleniumAppSteps {
     private NavigationService navigationService;
 
     public SeleniumAppSteps() throws MalformedURLException {
-        final DesiredCapabilities caps = DesiredCapabilities.firefox();
+        final DesiredCapabilities caps = DesiredCapabilities.chrome();
 //        caps.setBrowserName("chrome");
 //        caps.setCapability("chrome.switches", Arrays.asList("--kiosk"));
         driver = new RemoteWebDriver(new URL(localGridURL), caps);
