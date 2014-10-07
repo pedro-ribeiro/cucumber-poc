@@ -1,4 +1,4 @@
-Feature: Search
+Feature: Search for "byclosure"
   As an Internet User
   I want to access Google
   So that I can search something on the Internet
