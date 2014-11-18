@@ -3,6 +3,7 @@ Feature: Search for "yahoo"
   I want to access Google
   So that I can search "yahoo"
 
+  @bugautomation @nosoftware
   Scenario: Search for Yahoo
     Given I am in "http://www.google.com"
     When I search for "yahoo"
