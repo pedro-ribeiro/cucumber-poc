@@ -1,3 +1,4 @@
+@running
 Feature: Search for "byclosure"
   As an Internet User
   I want to access Google
