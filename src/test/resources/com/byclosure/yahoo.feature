@@ -3,8 +3,7 @@ Feature: Search for "yahoo"
   I want to access Google
   So that I can search "yahoo"
 
-@bugautomation @nosoftware
-  Scenario: Search for Yahoo
+  Scenario: Look for Yahoo
     Given I am in "http://www.google.com"
     When I look for "yahoo"
     Then I should see a list of results referring to "yahoo"
