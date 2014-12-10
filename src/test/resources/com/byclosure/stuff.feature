@@ -3,7 +3,7 @@ Feature: Search for "stuff"
   I want to access Google
   So that I can search something on the Internet
 
-  @wip
+  @peter @wip @byclosure
   Scenario: Search for Byclosure in Progress
     Given I am in "http://www.google.com"
     When I search for "Byclosure"
