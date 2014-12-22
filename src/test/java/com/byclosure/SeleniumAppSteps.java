@@ -9,6 +9,7 @@ import com.byclosure.webcattestingplatform.NavigationService;
 import com.byclosure.webcattestingplatform.pageobjects.IPageObject;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +36,8 @@ public class SeleniumAppSteps {
     private final static String localGridURL = "http://192.168.1.91:4444/wd/hub";
     private WebDriver driver;
     private NavigationService navigationService;
+
+    private List<Screenshot> screenshots = new ArrayList<Screenshot>();
 
     public SeleniumAppSteps() throws MalformedURLException {
         final DesiredCapabilities caps = DesiredCapabilities.chrome();
@@ -67,26 +71,51 @@ public class SeleniumAppSteps {
     @Given("^I am in \"([^\"]*)\"$")
     public void I_am_in(String url) throws Throwable {
          driver.get(url);
+
+         takeScreenshot();
     }
 
     @When("^I search for \"([^\"]*)\"$")
     public void I_search_for(String query) throws Throwable {
         GoogleFrontPageObject frontPage = navigationService.getPage("Google Front Page");
         frontPage.search(query);
+
+        takeScreenshot();
     }
 
     @Then("^I should see a list of results referring to \"([^\"]*)\"$")
     public void I_should_see_a_list_of_results_referring_to(String queryResult) throws Throwable {
         GoogleSearchResultPageObject searchResultPageObject = navigationService.getPage("Google Search Results Page");
 
+        takeScreenshot();
+
         Assert.assertTrue(searchResultPageObject.getNumberOfResultsReferingTo(queryResult) > 0);
+    }
+
+    @Before
+    public void before(Scenario scenario) {
+        resetScreenshots();
     }
 
     @After
     public void after(Scenario scenario) throws IOException {
-        byte[] screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
-        scenario.embed(screenshot, "image/png");
+        for(Screenshot ss : getScreenshots()) {
+            scenario.embed(ss.getData(), "image/png");
+        }
 
         driver.quit();
+    }
+
+    public void resetScreenshots() {
+        screenshots.clear();
+    }
+
+    public List<Screenshot> getScreenshots() {
+        return screenshots;
+    }
+
+    public void takeScreenshot()  {
+        final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        screenshots.add(new Screenshot(screenshot));
     }
 }
