@@ -20,7 +20,7 @@ Feature: Search for "stuff"
 		|address|lisbon|
 		
 		
-  Scenario: Search for several terms
+  Scenario Outline: Search for several terms
     Given I am in "http://www.google.com"
     When I search for "<term>"
     Then I should see a list of results referring to "<term>"
