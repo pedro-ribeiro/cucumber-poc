@@ -8,3 +8,13 @@ Feature: Search for "stuff"
     Given I am in "http://www.google.com"
     When I search for "Byclosure"
     Then I should see a list of results referring to "Byclosure"
+	
+
+  Scenario: Search for Byclosure with multiple details
+    Given I am in "http://www.google.com"
+    When I search for "Byclosure"
+    Then I should see the following details:
+		| type | value |
+		|results|370000|
+		|duration|0.27|
+		|address|lisbon|
