@@ -18,3 +18,14 @@ Feature: Search for "stuff"
 		|results|370000|
 		|duration|0.27|
 		|address|lisbon|
+		
+		
+  Scenario: Search for several terms
+    Given I am in "http://www.google.com"
+    When I search for "<term>"
+    Then I should see a list of results referring to "<term>"
+	
+	Examples:
+    |term|
+    |lycos|
+	|astalavista|
