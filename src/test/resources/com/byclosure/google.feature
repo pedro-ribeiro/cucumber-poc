@@ -10,3 +10,7 @@ Feature: Search for "byclosure"
   Scenario: Search for Byclosure
     When I search for "Byclosure"
     Then I should see a list of results referring to "ByclosureXXX"
+    
+  Scenario: Search for ByclosureXXX
+    When I search for "ByclosureXXX"
+    Then I should see a list of results referring to "ByclosureXXX"
