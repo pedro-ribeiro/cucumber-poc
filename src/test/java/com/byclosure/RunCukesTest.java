@@ -1,15 +1,13 @@
 package com.byclosure;
 
 import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
+import com.byclosure.webcat.WebcatRunner;
 import org.junit.runner.RunWith;
 
 /**
  *
  */
-@RunWith(Cucumber.class)
-@CucumberOptions(format = {
-        "json:target/cucumber-json-report.json"
-})
+@RunWith(WebcatRunner.class)
+@CucumberOptions()
 public class RunCukesTest {
 }
