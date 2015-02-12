@@ -1,3 +1,6 @@
-.idea
+# compile folder
 target
+
+# IntelliJ files
 *.iml
+.idea
